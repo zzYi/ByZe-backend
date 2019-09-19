@@ -17,6 +17,7 @@ func InitRouter() *gin.Engine {
 	apiv1 := r.Group("/api/v1")
 	{
 		apiv1.GET("/ws", v1.WS())
+		apiv1.POST("/upload",v1.UploadFile)
 	}
 
 	return r
