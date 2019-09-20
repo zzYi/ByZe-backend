@@ -1,8 +1,8 @@
 package models
 
 import (
-	// mysql dialects
-	// _ "github.com/jinzhu/gorm/dialects/mysql"
+// mysql dialects
+// _ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 // var db *gorm.DB

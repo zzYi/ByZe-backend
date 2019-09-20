@@ -22,7 +22,7 @@ func getFilePath() string {
 }
 
 func GetFileFullPath() string {
-	return setting.AppSetting.RuntimeRootPath+getFilePath()
+	return setting.AppSetting.RuntimeRootPath + getFilePath()
 }
 
 func CheckFileExt(name string) bool {

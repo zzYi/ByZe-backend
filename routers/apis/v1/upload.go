@@ -9,16 +9,16 @@ import (
 
 func UploadFile(c *gin.Context) {
 
-	_,file,err := c.Request.FormFile("file")
+	_, file, err := c.Request.FormFile("file")
 
 	if err != nil {
 		logging.Warn(err)
-		c.JSON(http.StatusInternalServerError,err)
+		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
 	if file == nil {
-		c.JSON(http.StatusBadRequest,err)
+		c.JSON(http.StatusBadRequest, err)
 		return
 	}
 
@@ -27,24 +27,24 @@ func UploadFile(c *gin.Context) {
 
 	src := fileFullpath + fileName
 
-	if !upload.CheckFileExt(fileName){
-		c.JSON(http.StatusBadRequest,nil)
+	if !upload.CheckFileExt(fileName) {
+		c.JSON(http.StatusBadRequest, nil)
 		return
 	}
 
 	err = upload.CheckFile(fileFullpath)
-	if err != nil{
-		logging.Warn(err)
-		c.JSON(http.StatusInternalServerError,nil)
-		return
-	}
-
-	err = c.SaveUploadedFile(file,src)
 	if err != nil {
 		logging.Warn(err)
-		c.JSON(http.StatusInternalServerError,nil)
+		c.JSON(http.StatusInternalServerError, nil)
 		return
 	}
 
-	c.JSON(http.StatusOK,gin.H{"code":http.StatusOK,"msg":fileName})
+	err = c.SaveUploadedFile(file, src)
+	if err != nil {
+		logging.Warn(err)
+		c.JSON(http.StatusInternalServerError, nil)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "msg": fileName})
 }

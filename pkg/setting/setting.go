@@ -12,8 +12,8 @@ type App struct {
 	PageSize        int
 	JwtSecret       string
 	RuntimeRootPath string
-	FileSavePath 	string
-	FileAllowExts	[]string
+	FileSavePath    string
+	FileAllowExts   []string
 	LogSavePath     string
 	LogSaveName     string
 	TimeFormat      string
