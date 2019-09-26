@@ -38,8 +38,6 @@ type Client struct {
 	conn *websocket.Conn
 
 	// Buffered channel of outbound messages.
-	receive wsservice.WSpackage
-
 	send chan []byte
 }
 
@@ -57,7 +55,7 @@ func (c *Client) reader() {
 			break
 		}
 
-		c.send <- wsservice.ProcessMessage(message, &c.receive)
+		c.send <- wsservice.ProcessMessage(message)
 	}
 }
 

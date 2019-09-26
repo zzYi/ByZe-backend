@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"ByZe/pkg/app"
+	"ByZe/pkg/e"
 	"ByZe/pkg/logging"
 	"ByZe/pkg/upload"
 	"github.com/gin-gonic/gin"
@@ -8,17 +10,17 @@ import (
 )
 
 func UploadFile(c *gin.Context) {
-
+	appG := app.Gin{C: c}
 	_, file, err := c.Request.FormFile("file")
 
 	if err != nil {
 		logging.Warn(err)
-		c.JSON(http.StatusInternalServerError, err)
+		appG.Response(http.StatusInternalServerError, e.ERROR, nil)
 		return
 	}
 
 	if file == nil {
-		c.JSON(http.StatusBadRequest, err)
+		appG.Response(http.StatusBadRequest, e.InvalidParams, nil)
 		return
 	}
 
@@ -28,23 +30,23 @@ func UploadFile(c *gin.Context) {
 	src := fileFullpath + fileName
 
 	if !upload.CheckFileExt(fileName) {
-		c.JSON(http.StatusBadRequest, nil)
+		appG.Response(http.StatusBadRequest, e.ErrorUploadCheckFileFormat, nil)
 		return
 	}
 
 	err = upload.CheckFile(fileFullpath)
 	if err != nil {
 		logging.Warn(err)
-		c.JSON(http.StatusInternalServerError, nil)
+		appG.Response(http.StatusInternalServerError, e.ErrorUploadCheckFileFail, nil)
 		return
 	}
 
 	err = c.SaveUploadedFile(file, src)
 	if err != nil {
 		logging.Warn(err)
-		c.JSON(http.StatusInternalServerError, nil)
+		appG.Response(http.StatusInternalServerError, e.ErrorUploadSaveFileFail, nil)
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "msg": fileName})
+	appG.Response(http.StatusOK, e.SUCCESS, fileName)
 }

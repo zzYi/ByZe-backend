@@ -11,7 +11,8 @@ type WSpackage struct {
 	Data   interface{}
 }
 
-func ProcessMessage(message []byte, wsp *WSpackage) []byte {
+func ProcessMessage(message []byte) []byte {
+	var wsp WSpackage
 
 	if err := json.Unmarshal(message, &wsp); err != nil {
 		logging.Warn("can not unmarshal message: %v", err)
