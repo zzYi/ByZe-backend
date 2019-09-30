@@ -1,6 +1,7 @@
 package main
 
 import (
+	"ByZe/pkg/gredis"
 	"ByZe/pkg/logging"
 	"ByZe/pkg/setting"
 	"ByZe/routers"
@@ -15,6 +16,7 @@ func init() {
 	setting.SetUp()
 	// models.SetUp()
 	logging.Setup()
+	gredis.Setup()
 }
 
 func main() {

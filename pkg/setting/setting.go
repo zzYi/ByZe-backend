@@ -47,6 +47,16 @@ var ServerSetting = &Server{}
 // // DatabaseSetting databasesettings
 // var DatabaseSetting = &Database{}
 
+type Redis struct {
+	Host        string
+	Password    string
+	MaxIdle     int
+	MaxActive   int
+	IdleTimeout time.Duration
+}
+
+var RedisSetting = &Redis{}
+
 var cfg *ini.File
 
 // SetUp initialize the configuration instance
@@ -60,6 +70,8 @@ func SetUp() {
 	mapTo("app", AppSetting)
 	mapTo("server", ServerSetting)
 	// mapTo("database", DatabaseSetting)
+	mapTo("redis", RedisSetting)
+
 	ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
 	ServerSetting.WriteTimeout = ServerSetting.WriteTimeout * time.Second
 }

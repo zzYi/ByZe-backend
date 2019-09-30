@@ -18,6 +18,8 @@ func InitRouter() *gin.Engine {
 	{
 		apiv1.GET("/ws", v1.WS())
 		apiv1.POST("/upload", v1.UploadFile)
+		apiv1.GET("/data/:fileid", v1.GetFileData)
+		apiv1.GET("/distributed/:fileid", v1.GetDistributed)
 	}
 
 	return r
